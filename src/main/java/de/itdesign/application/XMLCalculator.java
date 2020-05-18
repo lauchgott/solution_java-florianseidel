@@ -12,22 +12,9 @@ import static main.java.de.itdesign.model.output.Results.createXmlOutput;
 
 public class XMLCalculator {
 
+
     public static void main(String[] args) {
 
-        try {
-            Data data = new Data();
-            data = data.unmarshalData("data.xml");
-
-            Operations allOperations = new Operations();
-            allOperations = allOperations.unmarshalOperations("operations.xml");
-
-            Results results = new Results();
-            calculateAllOperations(results, data.getCities(), allOperations.getOperations());
-            createXmlOutput(results, new File("outputGenerated.xml"));
-
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
 
         //Don't change this part
         if (args.length == 3) {
@@ -37,9 +24,51 @@ public class XMLCalculator {
             final String OPERATIONS_FILE = args[1];
             //Path to the output file
             final String OUTPUT_FILE = args[2];
+
+            try {
+                Data data = new Data();
+                data = data.unmarshalData(DATA_FILE);
+
+                Operations allOperations = new Operations();
+                allOperations = allOperations.unmarshalOperations(OPERATIONS_FILE);
+
+                Results results = new Results();
+                calculateAllOperations(results, data.getCities(), allOperations.getOperations());
+                createXmlOutput(results, new File(OUTPUT_FILE));
+
+            } catch (JAXBException e) {
+                e.printStackTrace();
+            }
+
+
         } else {
-            System.exit(1);
+
+            final String DATA_FILE = "data.xml";
+            final String OPERATIONS_FILE = "operations.xml";
+            final String OUTPUT_FILE = "generatedOutput.xml";
+
+            try {
+                Data data = new Data();
+                data = data.unmarshalData(DATA_FILE);
+
+                Operations allOperations = new Operations();
+                allOperations = allOperations.unmarshalOperations(OPERATIONS_FILE);
+
+                Results results = new Results();
+                calculateAllOperations(results, data.getCities(), allOperations.getOperations());
+                createXmlOutput(results, new File(OUTPUT_FILE));
+
+            } catch (JAXBException e) {
+                e.printStackTrace();
+            }
+
         }
+
+
+
+
+
+
 
 
 
